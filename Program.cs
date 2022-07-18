@@ -143,12 +143,76 @@ void TaskHard7()
 // Задача 8. Напишите программу, который выводит на консоль таблицу умножения от 1 до n, где n задаётся случайно от 2 до 100.
 void TaskHard8()
 {
+    Console.WriteLine("");
+    Console.WriteLine("Данная программа выводит таблицу умножения от 1 до случайного числа'");
+    Console.WriteLine("");
+    Random rand = new Random();
+    int number = rand.Next(2, 100);
+    Console.WriteLine($"Выпало число {number}");
+
+    void multiply(int n)
+    {
+        for (int i = 1; i <= 9; i++)
+        {
+            Console.WriteLine($"{n} * {i} = {n * i}");
+        }
+    }
+    for (int start = 1; start <= number; start++)
+    {
+        multiply(start);
+    }
 
 }
 // Задача 9. Дана игра со следующими правилами. Первый игрок называет любое натуральное число от 2 до 9, второй умножает его на любое натуральное число от 2 до 9, первый умножает результат на любое натуральное число от 2 до 9 и т. д. Выигрывает тот, у кого впервые получится число больше 1000. Запрограммировать консольный вариант игры.
 
 void TaskHard9()
 {
+    Console.WriteLine("");
+    Console.WriteLine("Добро пожаловать в игру 'Умножай и влавствуй'");
+    Console.WriteLine("");
+    int number = 1;
+    int player = 1;
+    int answer;
+    void changePlayer() // метод смены игрока
+    {
+        if (player == 1)
+        {
+            player = 2;
+        }
+        else
+        {
+            player = 1;
+        };
+    }
+    void turn() // метод хода
+    {
+        Console.WriteLine($"Текущий счёт: {number}");
+        Console.Write($"Игрок {player}, введите число от 2 до 9: ");
+        answer = Convert.ToInt32(Console.ReadLine());
+        if (answer < 2 || answer > 9)
+        {
+            Console.WriteLine("Вы ввели неверное число.");
+        }
+        else
+        {
+            number *= answer;
+            changePlayer();
+        };
+    }
+
+    while (true) // бесконечный цикл на игру
+    {
+        if (number <= 1000) // продолжение игры
+        {
+            turn();
+        }
+        else // конец игры
+        {
+            changePlayer();
+            Console.WriteLine($"Победил игрок {player} со счётом {number}"); // вывод победителя
+            break;
+        }
+    }
 
 }
 
@@ -156,7 +220,7 @@ void TaskHard9()
 // Task1();
 // Task2();
 // Task3();
-Task4();
+// Task4();
 // TaskHard1();
 // TaskHard2();
 // TaskHard3();
@@ -164,5 +228,5 @@ Task4();
 // TaskHard5();
 // TaskHard6();
 // TaskHard7();
-// TaskHard8();
+TaskHard8();
 // TaskHard9();
