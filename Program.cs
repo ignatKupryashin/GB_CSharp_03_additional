@@ -107,6 +107,125 @@ void Task4()
 void TaskHard1()
 {
 
+    Console.WriteLine(""); //пустая строка для красоты
+    Console.WriteLine("Данная программа определяет оптимальный маршрут для торгового менеджера в заданной четверти");
+    int randomPoint(int beginning, int end)
+    {
+        var rand = new Random();
+        return rand.Next(beginning, end);
+    }
+
+    Console.Write("Введите номер четверти (от 1 до 4) ");
+
+    int quater;
+
+    while (true) // определяется номер четерти
+    {
+        quater = Convert.ToInt32(Console.ReadLine());
+        if (quater > 0 && quater < 5)
+        {
+            Console.WriteLine($"Выбрана {quater} четверть.");
+            break;
+        }
+        else
+        {
+            Console.WriteLine("Введена несуществующая четверть");
+        }
+    }
+
+    int Ax = 0;
+    int Ay = 0;
+    int Bx, Cx, Dx, By, Cy, Dy;
+
+
+    if (quater == 1 || quater == 4)  // формирование координат Х
+    {
+        Bx = randomPoint(0, 100);
+        Cx = randomPoint(0, 100);
+        Dx = randomPoint(0, 100);
+    }
+    else
+    {
+        Bx = randomPoint(-100, 0);
+        Cx = randomPoint(-100, 0);
+        Dx = randomPoint(-100, 0);
+    }
+
+    if (quater == 1 || quater == 2)  // формирование координат y
+    {
+        By = randomPoint(0, 100);
+        Cy = randomPoint(0, 100);
+        Dy = randomPoint(0, 100);
+    }
+    else
+    {
+        By = randomPoint(-100, 0);
+        Cy = randomPoint(-100, 0);
+        Dy = randomPoint(-100, 0);
+    }
+
+    double spread(int x1, int y1, int x2, int y2)
+    {
+        double answer = Math.Sqrt((Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2)));
+        return answer;
+    }
+
+    double AB = spread(Ax, Ay, Bx, By); //определяем расстояния между всеми точками
+    double AC = spread(Ax, Ay, Cx, Cy);
+    double AD = spread(Ax, Ay, Dx, Dy);
+    double BD = spread(Bx, By, Dx, Dy);
+    double BC = spread(Bx, By, Cx, Cy);
+    double CD = spread(Cx, Cy, Dx, Dy);
+
+    //считаем все возможные варианты:
+    double ABCD = Math.Round(AB + BC + CD, 2);
+    double ACBD = Math.Round(AC + BC + BD, 2);
+    double ABDC = Math.Round(AB + BD + CD, 2);
+    double ACDB = Math.Round(AC + CD + BD, 2);
+    double ADCB = Math.Round(AD + CD + BC, 2);
+    double ADBC = Math.Round(AD + BD + BC, 2);
+
+    //вычисляем минимум
+
+    string minimalName = "ABCD";
+    double minimal = ABCD;
+    void findMinimal(double candidate, string candidateName)
+    {
+        if (candidate < minimal)
+        {
+            minimalName = candidateName;
+            minimal = candidate;
+        }
+    }
+    findMinimal(ACBD, nameof(ACBD));
+    findMinimal(ABDC, nameof(ABDC));
+    findMinimal(ACDB, nameof(ACDB));
+    findMinimal(ADCB, nameof(ADCB));
+    findMinimal(ADBC, nameof(ADBC));
+
+
+    //вывод данных и результатов
+
+    Console.WriteLine($"Введены следующие точки: ");
+    Console.WriteLine($"Точка B с координатами {Bx} {By}");
+    Console.WriteLine($"Точка C с координатами {Cx} {Cy}");
+    Console.WriteLine($"Точка D с координатами {Dx} {Dy}");
+
+    Console.WriteLine(""); //пустая строка для красоты
+    Console.WriteLine("Варианты маршрутов:");
+    Console.WriteLine($"Маршрут ABCD с расстоянием {ABCD}");
+    Console.WriteLine($"Маршрут ABDC с расстоянием {ABDC}");
+    Console.WriteLine($"Маршрут ACBD с расстоянием {ACBD}");
+    Console.WriteLine($"Маршрут ACDB с расстоянием {ACDB}");
+    Console.WriteLine($"Маршрут ADCB с расстоянием {ADCB}");
+    Console.WriteLine($"Маршрут ADBC с расстоянием {ADBC}");
+
+    Console.WriteLine(""); //пустая строка для красоты
+
+    Console.WriteLine($"Самым кратчайшим путём является {minimalName} с расстоянием {minimal}");
+
+    Console.WriteLine(""); //пустая строка для красоты
+
 }
 
 //Задача 2. Даны 4 точки a, b, c, d. Пересекаются ли вектора AB и CD?
@@ -223,12 +342,14 @@ void TaskHard9()
 // Task2();
 // Task3();
 // Task4();
-// TaskHard1();
+TaskHard1();
 // TaskHard2();
 // TaskHard3();
 // TaskHard4();
 // TaskHard5();
 // TaskHard6();
 // TaskHard7();
-TaskHard8();
+// TaskHard8();
 // TaskHard9();
+
+
