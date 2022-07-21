@@ -257,6 +257,57 @@ void TaskHard6()
 // Задача 7. Массив из ста элементов заполняется случайными числами от 1 до 100. Удалить из массива все элементы, содержащие цифру 3. Вывести в консоль новый массив и количество удалённых элементов.
 void TaskHard7()
 {
+    var rand = new Random();
+    int[] arr = new int[100];
+    int[] newArr = new int[100];
+    int deletedCounter = 0;
+    int j = 0; // счётчик для нового массива
+    for (int i = 0; i < 100; i++)
+    {
+        arr[i] = rand.Next(1, 101);
+    }
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] < 10) // проверяем числа от 1 до 10;
+        {
+            if (arr[i] == 3)
+            {
+                deletedCounter += 1;
+            }
+            else
+            {
+                newArr[j] = arr[i];
+                j++;
+            }
+        }
+        else // проверяем оставшиеся числа. Отдельного условия для 100 не создаем - он вдаст правельнйы результат и при данном алгоритме.
+        {
+            if (arr[i] / 30 == 1 || arr[i] % 10 == 3)
+            {
+                deletedCounter += 1;
+            }
+            else
+            {
+                newArr[j] = arr[i];
+                j++;
+            }
+        }
+    }
+    int[] newCleanArr = new int[j];
+    for (int i = 0; i < j; i++)
+    {
+        newCleanArr[i] = newArr[i];
+    }
+    Console.WriteLine("");//пустая строка для красоты
+    Console.WriteLine("Первоначальный массив: ");
+    Console.WriteLine(String.Join(" ", arr));
+    Console.WriteLine("");//пустая строка для красоты
+    Console.WriteLine($"Удаленых элементов: {deletedCounter}");
+    Console.WriteLine("");//пустая строка для красоты
+    Console.WriteLine($"Длинна нового массива: {newCleanArr.Length}");//
+    Console.WriteLine("");//пустая строка для красоты
+    Console.WriteLine("Новый массив: ");
+    Console.WriteLine(String.Join(" ", newCleanArr));
 
 }
 // Задача 8. Напишите программу, который выводит на консоль таблицу умножения от 1 до n, где n задаётся случайно от 2 до 100.
@@ -342,13 +393,13 @@ void TaskHard9()
 // Task2();
 // Task3();
 // Task4();
-TaskHard1();
+// TaskHard1();
 // TaskHard2();
 // TaskHard3();
 // TaskHard4();
 // TaskHard5();
 // TaskHard6();
-// TaskHard7();
+TaskHard7();
 // TaskHard8();
 // TaskHard9();
 
