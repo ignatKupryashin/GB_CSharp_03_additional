@@ -1,4 +1,8 @@
-﻿//Задача 1. Рассчитать значение y при заданном x по формуле
+﻿
+using System;
+using System.Collections;
+
+//Задача 1. Рассчитать значение y при заданном x по формуле
 
 void Task1()
 {
@@ -243,7 +247,140 @@ void TaskHard3()
 void TaskHard4()
 {
 
+    Hashtable averageTemperatures = new Hashtable(); //создаём хэш таблицу для высоких и низких температур
+    var rand = new Random();
+    DateTime dateNow = DateTime.Today;
+    Console.WriteLine($"Сегодня: {dateNow:d}"); //определяем текущую дату
+
+    for (int i = 0; i < 120; i++) // Заполнение массива. 120 - колличество месяцев в задании
+    {
+        double temp = rand.Next(-50, 50);
+        averageTemperatures[dateNow.AddMonths(-i)] = temp; //Добавляется температура в заданную дату
+    }
+
+    //ввод данных пользователем
+    Console.WriteLine($"Имеются данные от {dateNow.AddMonths(-120):d} до {dateNow:d}");
+
+
+    DateTime insertDate() // функция приёма даты от пользователя
+    {
+        int Year;
+        int Month;
+        while (true)
+        {
+            Console.Write("Введите год периода: ");
+            Year = int.Parse(Console.ReadLine());
+            Console.Write("Введите месяц периода: ");
+            Month = int.Parse(Console.ReadLine());
+            if (Month > 0 && Month < 13) // проверка месяца на валидность
+            {
+                break;
+            }
+            Console.WriteLine("Вы ввели некорректную дату");
+        }
+        return new DateTime(Year, Month, dateNow.Day);
+    }
+
+    Console.WriteLine("Введите Год и Месяц начала периода:");
+    DateTime CheckingDateStart = insertDate();
+    Console.WriteLine("Введите Год и Месяц окончания периода:");
+    DateTime CheckingDateEnd = insertDate();
+
+    if (CheckingDateStart > CheckingDateEnd) // проверка на то, что начало периода раньше окончания
+    {
+        Console.WriteLine("Даты поменяны местами, так как окончание не может быть раньше начала.");
+        DateTime Temp = CheckingDateStart;
+        CheckingDateStart = CheckingDateEnd;
+        CheckingDateEnd = Temp;
+    }
+
+    Console.WriteLine($"Дата начала проверяемого периода: {CheckingDateStart.Month}.{CheckingDateStart.Year}");
+    Console.WriteLine($"Дата окончания проверяемого периода: {CheckingDateEnd.Month}.{CheckingDateEnd.Year}");
+
+    int SummerMax = -51; // цифры введены за границей генерируемых. По ним будем определять отсутствие данных значений в проверяемом периоде
+    int AutumnMax = -51;
+    int WinterMax = -51;
+    int SpringMax = -51;
+    int SummerMin = 51;
+    int AutumnMin = 51;
+    int WinterMin = 51;
+    int SpringMin = 51;
+
+    for (DateTime date = CheckingDateStart; date < CheckingDateEnd; date = date.AddMonths(+1))
+    {
+        int CurrentTemp = Convert.ToInt32(averageTemperatures[date]);
+        if (date.Month == 1 || date.Month == 2 || date.Month == 12) // проверяем зиму
+        {
+            if (CurrentTemp > WinterMax)
+            {
+                WinterMax = CurrentTemp;
+            }
+            if (CurrentTemp < WinterMin)
+            {
+                WinterMin = CurrentTemp;
+            }
+        }
+
+        if (date.Month == 3 || date.Month == 4 || date.Month == 5) // проверяем весну
+        {
+            if (CurrentTemp > SpringMax)
+            {
+                SpringMax = CurrentTemp;
+            }
+            if (CurrentTemp < SpringMin)
+            {
+                SpringMin = CurrentTemp;
+            }
+        }
+
+        if (date.Month == 6 || date.Month == 7 || date.Month == 8) // проверяем лето
+        {
+            if (CurrentTemp > SummerMax)
+            {
+                SummerMax = CurrentTemp;
+            }
+            if (CurrentTemp < SummerMin)
+            {
+                SummerMin = CurrentTemp;
+            }
+        }
+
+        if (date.Month == 6 || date.Month == 7 || date.Month == 8) // проверяем осень
+        {
+            if (CurrentTemp > AutumnMax)
+            {
+                AutumnMax = CurrentTemp;
+            }
+            if (CurrentTemp < AutumnMin)
+            {
+                AutumnMin = CurrentTemp;
+            }
+        }
+
+    }
+
+
+    void answer(int wMin, int wMax, string periodYear)   //вывод ответа
+    {
+        Console.WriteLine(""); // пустая строка для красоты
+        Console.WriteLine($"{periodYear}:");
+        if (wMax != -51)
+        {
+            Console.WriteLine($"Набольшая температура: {wMax}");
+            Console.WriteLine($"Наименьшая температура: {wMin}");
+        }
+        else
+        {
+            Console.WriteLine("Наибольшую и наименьшую температуру невозможно определить.");
+        }
+    }
+    answer(WinterMin, WinterMax, "Зима");
+    answer(SpringMin, SpringMax, "Весна");
+    answer(SummerMin, SummerMax, "Лето");
+    answer(AutumnMin, AutumnMax, "Осень");
 }
+
+
 //Задача 5. На вход подаётся число n > 4, указывающее длину пароля. Создайте метод, генерирующий пароль заданной длины. В пароле обязательно использовать цифру, букву и специальный знак.
 void TaskHard5()
 {
@@ -310,6 +447,9 @@ void TaskHard7()
     Console.WriteLine(String.Join(" ", newCleanArr));
 
 }
+
+
+
 // Задача 8. Напишите программу, который выводит на консоль таблицу умножения от 1 до n, где n задаётся случайно от 2 до 100.
 void TaskHard8()
 {
@@ -380,7 +520,7 @@ void TaskHard9()
         }
         else // конец игры
         {
-            changePlayer();
+            changePlayer(); // отмена предыдущей смены игрока
             Console.WriteLine($"Победил игрок {player} со счётом {number}"); // вывод победителя
             break;
         }
@@ -396,10 +536,10 @@ void TaskHard9()
 // TaskHard1();
 // TaskHard2();
 // TaskHard3();
-// TaskHard4();
+TaskHard4();
 // TaskHard5();
 // TaskHard6();
-TaskHard7();
+// TaskHard7();
 // TaskHard8();
 // TaskHard9();
 
