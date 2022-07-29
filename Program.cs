@@ -236,6 +236,24 @@ void TaskHard1()
 void TaskHard2()
 {
 
+    Console.WriteLine(""); //пустая строка для красоты
+    Console.WriteLine("Данная программа проверяет: пересекаются ли векторы AB и CD");
+
+    var rand = new Random();
+    int Ax = rand.Next(-100, 100); // формируем четыре случайные точки
+    int Ay = rand.Next(-100, 100);
+    int Bx = rand.Next(-100, 100);
+    int By = rand.Next(-100, 100);
+    int Cx = rand.Next(-100, 100);
+    int Cy = rand.Next(-100, 100);
+    int Dx = rand.Next(-100, 100);
+    int Dy = rand.Next(-100, 100);
+
+    Console.WriteLine($"Координаты точки A:{Ax},{Ay}");
+    Console.WriteLine($"Координаты точки B:{Bx},{By}");
+    Console.WriteLine($"Координаты точки C:{Cx},{Cy}");
+    Console.WriteLine($"Координаты точки D:{Dx},{Dy}");
+
 }
 //Задача 3. Найти в какой четверти лежит точка пересечения из задачи 2 (если вектора пересекаются).
 void TaskHard3()
@@ -389,7 +407,34 @@ void TaskHard5()
 // Задача 6.Из центра координат к точке А(x, y) проведён отрезок АО. Напишите программу, определяющую наименьший угол наклона отрезка AO к оси X.
 void TaskHard6()
 {
+    Console.WriteLine("");
+    Console.WriteLine("Данная программа находит наименьший угол наклона отрезка A0 к оси X");
+    Console.WriteLine("");
+    var rand = new Random();
+    int Ax = rand.Next(-50, 50);
+    int Ay = rand.Next(-50, 50);
+    double Answer;
+    Console.WriteLine($"Задана точка А с координатами ({Ax},{Ay})");
 
+    //сторона Ac - гипотенуза (отрезок А0 - А)
+    if (Ax == 0)
+    {
+        Answer = 90;
+    }
+    else
+    {
+        double Ac = Math.Sqrt((Ax * Ax) + (Ay * Ay)); // считаем длинну отрезка А0
+
+
+        Ax = Math.Abs(Ax); // конвертируем в модуль, чтобы при любых значениях выысчитывался именно наименьший угол
+        Ay = Math.Abs(Ay);
+
+        //расчёт угла по теореме косинусов
+        Answer = Math.Acos((((Ac * Ac) + (Ax * Ax) - (Ay * Ay)) / (2 * Ac * Ax)));
+        Answer = Math.Round(Answer * 180 / Math.PI, 2); // конвертируем из радиан в градусы и округляем
+    }
+    Console.WriteLine($"Наимкеньший угол наклона отрезка к оси X равен {Answer} градусов");
+    Console.WriteLine("");//пустая строка для красоты
 }
 // Задача 7. Массив из ста элементов заполняется случайными числами от 1 до 100. Удалить из массива все элементы, содержащие цифру 3. Вывести в консоль новый массив и количество удалённых элементов.
 void TaskHard7()
@@ -536,9 +581,9 @@ void TaskHard9()
 // TaskHard1();
 // TaskHard2();
 // TaskHard3();
-TaskHard4();
+// TaskHard4();
 // TaskHard5();
-// TaskHard6();
+TaskHard6();
 // TaskHard7();
 // TaskHard8();
 // TaskHard9();
